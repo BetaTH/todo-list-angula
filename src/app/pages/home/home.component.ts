@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'home-root',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
+  templateUrl: './home.component.html',
 })
-export class AppComponent {
+export class HomeComponent {
   title = 'todo-list';
 }

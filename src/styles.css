@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply -tracking-wider;
+  }
+
+  html {
+    @apply h-full scroll-smooth;
+    font-size: calc(100vw / 390 * 16);
+  }
+
+  @media screen and (min-width: 640px) {
+    html {
+      font-size: calc(1440px / 1440 * 16);
+    }
+  }
+}

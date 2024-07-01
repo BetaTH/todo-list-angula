@@ -3,9 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { v4 as uuid } from 'uuid';
-import { LucideIconsModule } from '../../modules/lucide-icons.module';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { LocalStorageModule } from '../../services/local-storage.module';
+import { LucideIconsModule } from '../../components/lucide-icons/lucide-icons.module';
+import { LocalStorageService } from '../../services/local-storage/local-storage.service';
+import { LocalStorageModule } from '../../services/local-storage/local-storage.module';
 
 export interface Task {
   id: string;

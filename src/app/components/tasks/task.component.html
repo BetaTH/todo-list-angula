@@ -1,0 +1,28 @@
+<div
+  class="flex w-full justify-between pb-2 pt-4 border-primary gap-4"
+  [ngClass]="{ 'border-b': !isLast, 'pt-0': isFirst }"
+>
+  <span class="text-lg" [ngClass]="{ 'line-through': task.isDone }"
+    >{{ task.title }}
+  </span>
+  <div class="flex gap-2 items-start">
+    <button
+      [title]="task.isDone ? 'Desfazer' : 'Concluir'"
+      (click)="toggleIsDone()"
+      class="btn btn-primary size-10 p-0 min-h-10"
+      [ngClass]="{ 'btn-ghost': task.isDone }"
+    >
+      <lucide-angular
+        [name]="task.isDone ? 'undo' : 'check'"
+        class="size-5"
+      ></lucide-angular>
+    </button>
+    <button
+      title="Deletar"
+      (click)="removeTask()"
+      class="btn btn-error size-10 p-0 min-h-10"
+    >
+      <lucide-angular name="trash" class="size-5"></lucide-angular>
+    </button>
+  </div>
+</div>

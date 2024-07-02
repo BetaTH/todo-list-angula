@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { LucideIconsModule } from '../../components/lucide-icons/lucide-icons.module';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { LocalStorageModule } from '../../services/local-storage/local-storage.module';
+import { TaskComponent } from '../../components/tasks/task.component';
 
 export interface Task {
   id: string;
@@ -16,16 +17,24 @@ export interface Task {
 @Component({
   selector: 'home-root',
   standalone: true,
-  imports: [FormsModule, CommonModule, LucideIconsModule, LocalStorageModule],
+  imports: [
+    TaskComponent,
+    FormsModule,
+    CommonModule,
+    LucideIconsModule,
+    LocalStorageModule,
+  ],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
   tasks: Task[] = [];
+  tasksToDoCount = 0;
+  tasksCount = 0;
   constructor(private localStorageService: LocalStorageService) {
     this.tasks = this.localStorageService.get('tasks') || [];
+    this.updateTasksCount();
   }
 
-  title = 'todo-list';
   newTask: string = '';
 
   addTask() {
@@ -34,11 +43,13 @@ export class HomeComponent {
       this.newTask = '';
     }
     this.updateLocalStorageTasks();
+    this.updateTasksCount();
   }
 
   removeTask(task: Task) {
     this.tasks = this.tasks.filter((t) => t.id !== task.id);
     this.updateLocalStorageTasks();
+    this.updateTasksCount();
   }
 
   toggleIsDone(task: Task) {
@@ -49,6 +60,17 @@ export class HomeComponent {
       return t;
     });
     this.updateLocalStorageTasks();
+    this.updateTasksCount();
+  }
+
+  clearTasks() {
+    this.tasks = [];
+    this.localStorageService.remove('tasks');
+    this.updateTasksCount();
+  }
+
+  getTasksToDoCount() {
+    return this.tasks.filter((t) => !t.isDone).length;
   }
 
   getTasksDoneCount() {
@@ -63,8 +85,8 @@ export class HomeComponent {
     this.localStorageService.set('tasks', this.tasks);
   }
 
-  clearTasks() {
-    this.tasks = [];
-    this.localStorageService.remove('tasks');
+  updateTasksCount() {
+    this.tasksToDoCount = this.getTasksToDoCount();
+    this.tasksCount = this.getTasksCount();
   }
 }

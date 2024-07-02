@@ -17,39 +17,18 @@
     </div>
     <div class="w-full flex flex-col sm:w-[40rem] max-w-full items-start gap-5">
       <p class="text-xl font-medium">
-        Tarefas a fazer: {{ getTasksCount() - getTasksDoneCount() }} de
-        {{ getTasksCount() }}
+        Tarefas a fazer: {{ tasksToDoCount }} de
+        {{ tasksCount }}
       </p>
       <div class="w-full flex flex-col">
         @for (task of tasks; track task.id; let idx = $index, length = $count) {
-        <div
-          class="flex w-full justify-between pb-2 pt-4 border-primary gap-4"
-          [ngClass]="{ 'border-b': idx !== length - 1, 'pt-0': idx === 0 }"
-        >
-          <span class="text-lg" [ngClass]="{ 'line-through': task.isDone }"
-            >{{ task.title }}
-          </span>
-          <div class="flex gap-2 items-start">
-            <button
-              [title]="task.isDone ? 'Desfazer' : 'Concluir'"
-              (click)="toggleIsDone(task)"
-              class="btn btn-primary size-10 p-0 min-h-10"
-              [ngClass]="{ 'btn-ghost': task.isDone }"
-            >
-              <lucide-angular
-                [name]="task.isDone ? 'undo' : 'check'"
-                class="size-5"
-              ></lucide-angular>
-            </button>
-            <button
-              title="Deletar"
-              (click)="removeTask(task)"
-              class="btn btn-error size-10 p-0 min-h-10"
-            >
-              <lucide-angular name="trash" class="size-5"></lucide-angular>
-            </button>
-          </div>
-        </div>
+        <task
+          [task]="task"
+          [isLast]="idx >= length - 1"
+          [isFirst]="idx === 0"
+          (handleRemoveTask)="removeTask(task)"
+          (handleToggleIsDone)="toggleIsDone(task)"
+        ></task>
         } @empty {
         <div class="w-full h-40 flex items-center justify-center flex-col">
           <lucide-angular name="list-todo" class="size-16"></lucide-angular>
